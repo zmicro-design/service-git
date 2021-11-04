@@ -1,0 +1,3 @@
+NAME=git
+VERSION=v0.0.0
+DESCRIPTION="Git Service"

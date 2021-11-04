@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  git:
+    image: gogs/gogs:${SERVICE_GIT_VERSION}
+    ports:
+      - 13000:3000
+      - 10022:22
+    environment:
+      TZ: Asia/Shanghai
+      GOGS_HTTP_PROTO: ${GOGS_HTTP_PROTO}
+      GOGS_HTTP_HOST: ${GOGS_HTTP_HOST}
+      DRONE_HTTP_PROTO: ${DRONE_HTTP_PROTO}
+      DRONE_HTTP_HOST: ${DRONE_HTTP_HOST}
+      DRONE_RPC_SECRET: ${DRONE_RPC_SECRET}
+      DRONE_ADMIN_USER: ${DRONE_ADMIN_USER}
+    volumes:
+      - ${SERVICE_DATA}/data:/data
+      - ${SERVICE_DATA}/conf:/data/gogs
+networks:
+  default:
+    external: true
+    name: compose-ingress
