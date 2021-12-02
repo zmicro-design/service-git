@@ -8,51 +8,40 @@ check() {
   fi
 
   config::load_file $SERVICE_GIT_CONFIG
-  if [ -z "$GOGS_HTTP_PROTO" ]; then
-    inquirer::text "请输入 GOGS_HTTP_PROTO:" value
-    config::set GOGS_HTTP_PROTO $value $SERVICE_GIT_CONFIG
+
+  if [ -z "$SERVICE_GIT_DOMAIN" ]; then
+    inquirer::text "请输入 SERVICE_GIT_DOMAIN:" value
+    config::set SERVICE_GIT_DOMAIN $value $SERVICE_GIT_CONFIG
   fi
 
-  if [ -z "$GOGS_HTTP_HOST" ]; then
-    inquirer::text "请输入 GOGS_HTTP_HOST:" value
-    config::set GOGS_HTTP_HOST $value $SERVICE_GIT_CONFIG
+  if [ -z "$SERVICE_GIT_DRONE_DOMAIN" ]; then
+    inquirer::text "请输入 SERVICE_GIT_DRONE_DOMAIN:" value
+    config::set SERVICE_GIT_DRONE_DOMAIN $value $SERVICE_GIT_CONFIG
   fi
 
-  if [ -z "$DRONE_HTTP_PROTO" ]; then
-    inquirer::text "请输入 DRONE_HTTP_PROTO:" value
-    config::set DRONE_HTTP_PROTO $value $SERVICE_GIT_CONFIG
+  if [ -z "$SERVICE_GIT_DRONE_RPC_SECRET" ]; then
+    inquirer::text "请输入 SERVICE_GIT_DRONE_RPC_SECRET:" value "$(os::uuid)"
+    config::set SERVICE_GIT_DRONE_RPC_SECRET $value $SERVICE_GIT_CONFIG
   fi
 
-  if [ -z "$DRONE_HTTP_HOST" ]; then
-    inquirer::text "请输入 DRONE_HTTP_HOST:" value
-    config::set DRONE_HTTP_HOST $value $SERVICE_GIT_CONFIG
+  if [ -z "$SERVICE_GIT_DRONE_ADMIN_USER" ]; then
+    inquirer::text "请输入 SERVICE_GIT_DRONE_ADMIN_USER:" value
+    config::set SERVICE_GIT_DRONE_ADMIN_USER $value $SERVICE_GIT_CONFIG
   fi
 
-  if [ -z "$DRONE_RPC_SECRET" ]; then
-    inquirer::text "请输入 DRONE_RPC_SECRET:" value
-    config::set DRONE_RPC_SECRET $value $SERVICE_GIT_CONFIG
-  fi
-
-  if [ -z "$DRONE_ADMIN_USER" ]; then
-    inquirer::text "请输入 DRONE_ADMIN_USER:" value
-    config::set DRONE_ADMIN_USER $value $SERVICE_GIT_CONFIG
-  fi
-
-  if [ -z "$SECRET_KEY" ]; then
-    inquirer::text "请输入 SECRET_KEY:" value
-    config::set SECRET_KEY $value $SERVICE_GIT_CONFIG
-  fi
+  # if [ -z "$SECRET_KEY" ]; then
+  #   inquirer::text "请输入 SECRET_KEY:" value "$(os::uuid)"
+  #   config::set SECRET_KEY $value $SERVICE_GIT_CONFIG
+  # fi
   
   # load again
   config::load_file $SERVICE_GIT_CONFIG
   # @TODO
-  export GOGS_HTTP_HOST=$GOGS_HTTP_HOST
-  export GOGS_HTTP_PROTO=$GOGS_HTTP_PROTO
-  export DRONE_HTTP_PROTO=$DRONE_HTTP_PROTO
-  export DRONE_HTTP_HOST=$DRONE_HTTP_HOST
-  export DRONE_RPC_SECRET=$DRONE_RPC_SECRET
-  export DRONE_ADMIN_USER=$DRONE_ADMIN_USER
-  export SECRET_KEY=$SECRET_KEY
+  export SERVICE_GIT_DOMAIN=$SERVICE_GIT_DOMAIN
+  export SERVICE_GIT_DRONE_DOMAIN=$SERVICE_GIT_DRONE_DOMAIN
+  export SERVICE_GIT_DRONE_RPC_SECRET=$SERVICE_GIT_DRONE_RPC_SECRET
+  export SERVICE_GIT_DRONE_ADMIN_USER=$SERVICE_GIT_DRONE_ADMIN_USER
+  # export SECRET_KEY=$SECRET_KEY
 }
 
 check $@
