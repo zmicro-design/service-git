@@ -16,7 +16,8 @@ services:
       DRONE_ADMIN_USER: ${SERVICE_GIT_DRONE_ADMIN_USER}
     volumes:
       - ${SERVICE_DATA}/data:/data
-      - ${SERVICE_DATA}/conf:/data/gogs
+      - ${SERVICE_CONFIGS}/app.ini:/data/gogs/conf.app.ini
+
 networks:
   default:
     external: true

@@ -29,10 +29,10 @@ check() {
     config::set SERVICE_GIT_DRONE_ADMIN_USER $value $SERVICE_GIT_CONFIG
   fi
 
-  # if [ -z "$SECRET_KEY" ]; then
-  #   inquirer::text "请输入 SECRET_KEY:" value "$(os::uuid)"
-  #   config::set SECRET_KEY $value $SERVICE_GIT_CONFIG
-  # fi
+  if [ -z "$SERVICE_GIT_SECRET_KEY" ]; then
+    inquirer::text "请输入 SERVICE_GIT_SECRET_KEY:" value "$(os::uuid)"
+    config::set SERVICE_GIT_SECRET_KEY $value $SERVICE_GIT_CONFIG
+  fi
   
   # load again
   config::load_file $SERVICE_GIT_CONFIG
@@ -41,7 +41,13 @@ check() {
   export SERVICE_GIT_DRONE_DOMAIN=$SERVICE_GIT_DRONE_DOMAIN
   export SERVICE_GIT_DRONE_RPC_SECRET=$SERVICE_GIT_DRONE_RPC_SECRET
   export SERVICE_GIT_DRONE_ADMIN_USER=$SERVICE_GIT_DRONE_ADMIN_USER
-  # export SECRET_KEY=$SECRET_KEY
+  export SECRET_KEY=$SECRET_KEY
+
+  # Dynamic Update Config
+  cp $SERVICE_DIR/config/app.ini $SERVICE_CONFIGS/app.ini
+  sed -i -e "s/<DOMAIN>/${SERVICE_GIT_DOMAIN}/" $SERVICE_CONFIGS/app.ini
+  sed -i -e "s/<ROOT_URL>/https:\/\/${SERVICE_GIT_DOMAIN}/" $SERVICE_CONFIGS/app.ini
+  sed -i -e "s/<SECRET_KEY>/${SERVICE_GIT_SECRET_KEY}/" $SERVICE_CONFIGS/app.ini
 }
 
 check $@
