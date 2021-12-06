@@ -33,6 +33,31 @@ check() {
     inquirer::text "请输入 SERVICE_GIT_SECRET_KEY:" value "$(os::uuid)"
     config::set SERVICE_GIT_SECRET_KEY $value $SERVICE_GIT_CONFIG
   fi
+
+  if [ -z "$SERVICE_GIT_POSTGRES_HOST" ]; then
+    inquirer::text "请输入 SERVICE_GIT_POSTGRES_HOST:" value "$(os::uuid)"
+    config::set SERVICE_GIT_POSTGRES_HOST $value $SERVICE_GIT_CONFIG
+  fi
+
+  if [ -z "$SERVICE_GIT_POSTGRES_PORT" ]; then
+    inquirer::text "请输入 SERVICE_GIT_POSTGRES_PORT:" value "$(os::uuid)"
+    config::set SERVICE_GIT_POSTGRES_PORT $value $SERVICE_GIT_CONFIG
+  fi
+
+  if [ -z "$SERVICE_GIT_POSTGRES_USERNAME" ]; then
+    inquirer::text "请输入 SERVICE_GIT_POSTGRES_USERNAME:" value "$(os::uuid)"
+    config::set SERVICE_GIT_POSTGRES_USERNAME $value $SERVICE_GIT_CONFIG
+  fi
+
+  if [ -z "$SERVICE_GIT_POSTGRES_PASSWORD" ]; then
+    inquirer::text "请输入 SERVICE_GIT_POSTGRES_PASSWORD:" value "$(os::uuid)"
+    config::set SERVICE_GIT_POSTGRES_PASSWORD $value $SERVICE_GIT_CONFIG
+  fi
+
+  if [ -z "$SERVICE_GIT_POSTGRES_DB" ]; then
+    inquirer::text "请输入 SERVICE_GIT_POSTGRES_DB:" value "$(os::uuid)"
+    config::set SERVICE_GIT_POSTGRES_DB $value $SERVICE_GIT_CONFIG
+  fi
   
   # load again
   config::load_file $SERVICE_GIT_CONFIG
@@ -41,13 +66,24 @@ check() {
   export SERVICE_GIT_DRONE_DOMAIN=$SERVICE_GIT_DRONE_DOMAIN
   export SERVICE_GIT_DRONE_RPC_SECRET=$SERVICE_GIT_DRONE_RPC_SECRET
   export SERVICE_GIT_DRONE_ADMIN_USER=$SERVICE_GIT_DRONE_ADMIN_USER
-  export SECRET_KEY=$SECRET_KEY
+  export SERVICE_GIT_SECRET_KEY=$SERVICE_GIT_SECRET_KEY
+  export SERVICE_GIT_POSTGRES_HOST=$SERVICE_GIT_POSTGRES_HOST
+  export SERVICE_GIT_POSTGRES_PORT=$SERVICE_GIT_POSTGRES_PORT
+  export SERVICE_GIT_POSTGRES_USERNAME=$SERVICE_GIT_POSTGRES_USERNAME
+  export SERVICE_GIT_POSTGRES_PASSWORD=$SERVICE_GIT_POSTGRES_PASSWORD
+  export SERVICE_GIT_POSTGRES_DB=$SERVICE_GIT_POSTGRES_DB
 
   # Dynamic Update Config
-  cp $SERVICE_DIR/config/app.ini $SERVICE_CONFIGS/app.ini
+  cp $SERVICE_DIR/conf/app.ini $SERVICE_CONFIGS/app.ini
   sed -i -e "s/<DOMAIN>/${SERVICE_GIT_DOMAIN}/" $SERVICE_CONFIGS/app.ini
   sed -i -e "s/<ROOT_URL>/https:\/\/${SERVICE_GIT_DOMAIN}/" $SERVICE_CONFIGS/app.ini
   sed -i -e "s/<SECRET_KEY>/${SERVICE_GIT_SECRET_KEY}/" $SERVICE_CONFIGS/app.ini
+
+  sed -i -e "s/<POSTGRES_HOST>/${SERVICE_GIT_POSTGRES_HOST}/" $SERVICE_CONFIGS/app.ini
+  sed -i -e "s/<POSTGRES_PORT>/${SERVICE_GIT_POSTGRES_PORT}/" $SERVICE_CONFIGS/app.ini
+  sed -i -e "s/<POSTGRES_USERNAME>/${SERVICE_GIT_POSTGRES_USERNAME}/" $SERVICE_CONFIGS/app.ini
+  sed -i -e "s/<POSTGRES_PASSWORD>/${SERVICE_GIT_POSTGRES_PASSWORD}/" $SERVICE_CONFIGS/app.ini
+  sed -i -e "s/<POSTGRES_DB>/${SERVICE_GIT_POSTGRES_DB}/" $SERVICE_CONFIGS/app.ini
 }
 
 check $@

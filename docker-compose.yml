@@ -3,9 +3,9 @@ version: '3.7'
 services:
   git:
     image: gogs/gogs:${SERVICE_GIT_VERSION}
-    ports:
-      - 13000:3000
-      - 10022:22
+    # ports:
+    #   - 13000:3000
+    #   - 10022:22
     environment:
       TZ: Asia/Shanghai
       GOGS_HTTP_PROTO: https
@@ -15,7 +15,7 @@ services:
       DRONE_RPC_SECRET: ${SERVICE_GIT_DRONE_RPC_SECRET}
       DRONE_ADMIN_USER: ${SERVICE_GIT_DRONE_ADMIN_USER}
     volumes:
-      - ${SERVICE_DATA}/data:/data
+      - ${SERVICE_DATA}:/data
       - ${SERVICE_CONFIGS}/app.ini:/data/gogs/conf.app.ini
 
 networks:
