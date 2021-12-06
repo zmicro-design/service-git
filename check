@@ -75,6 +75,7 @@ check() {
 
   # Dynamic Update Config
   cp $SERVICE_DIR/conf/app.ini $SERVICE_CONFIGS/app.ini
+
   sed -i -e "s/<DOMAIN>/${SERVICE_GIT_DOMAIN}/" $SERVICE_CONFIGS/app.ini
   sed -i -e "s/<ROOT_URL>/https:\/\/${SERVICE_GIT_DOMAIN}/" $SERVICE_CONFIGS/app.ini
   sed -i -e "s/<SECRET_KEY>/${SERVICE_GIT_SECRET_KEY}/" $SERVICE_CONFIGS/app.ini
@@ -84,6 +85,11 @@ check() {
   sed -i -e "s/<POSTGRES_USERNAME>/${SERVICE_GIT_POSTGRES_USERNAME}/" $SERVICE_CONFIGS/app.ini
   sed -i -e "s/<POSTGRES_PASSWORD>/${SERVICE_GIT_POSTGRES_PASSWORD}/" $SERVICE_CONFIGS/app.ini
   sed -i -e "s/<POSTGRES_DB>/${SERVICE_GIT_POSTGRES_DB}/" $SERVICE_CONFIGS/app.ini
+
+  # @BUGS_DOCKER_COMPOSE
+  # if [ -d "$SERVICE_DATA/gogs/conf" ]; then
+  #   cp $SERVICE_CONFIGS/app.ini $SERVICE_DATA/gogs/conf/app.ini
+  # fi
 }
 
 check $@
