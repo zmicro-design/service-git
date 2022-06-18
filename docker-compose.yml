@@ -2,21 +2,29 @@ version: '3.7'
 
 services:
   git:
-    image: gogs/gogs:${SERVICE_GIT_VERSION}
+    image: whatwewant/gogs:${SERVICE_GIT_VERSION}
     # ports:
-    #   - 13000:3000
+    #   - 8080:3000
     #   - 10022:22
     environment:
       TZ: Asia/Shanghai
-      GOGS_HTTP_PROTO: https
-      GOGS_HTTP_HOST: ${SERVICE_GIT_DOMAIN}
-      DRONE_HTTP_PROTO: https
-      DRONE_HTTP_HOST: ${SERVICE_GIT_DRONE_DOMAIN}
-      DRONE_RPC_SECRET: ${SERVICE_GIT_DRONE_RPC_SECRET}
-      DRONE_ADMIN_USER: ${SERVICE_GIT_DRONE_ADMIN_USER}
+      COMPANY: ${SERVICE_GIT_COMPANY}
+      # PORT: 8080
+      ROOT_URL: ${SERVICE_GIT_ROOT_URL}
+      SECRET_KEY: ${SERVICE_GIT_SECRET_KEY}
+      #
+      MAIL_ENABLE: '${SERVICE_GIT_MAIL_ENABLE}'
+      MAIL_HOST: ${SERVICE_GIT_MAIL_HOST}
+      MAIL_PORT: ${SERVICE_GIT_MAIL_PORT}
+      MAIL_USERNAME: ${SERVICE_GIT_MAIL_USERNAME}
+      MAIL_PASSWORD: ${SERVICE_GIT_MAIL_PASSWORD}
+      #
+      OAUTH2_ENABLE: ${SERVICE_GIT_OAUTH2_ENABLE}
+      OAUTH2_SERVER_URL: ${SERVICE_GIT_OAUTH2_SERVER_URL}
+      OAUTH2_CLIENT_ID: ${SERVICE_GIT_OAUTH2_CLIENT_ID}
+      OAUTH2_CLIENT_SECRET: ${SERVICE_GIT_OAUTH2_CLIENT_SECRET}
     volumes:
       - ${SERVICE_DATA}:/data
-      - ${SERVICE_CONFIGS}/app.ini:/data/gogs/conf/app.ini
 
 networks:
   default:
