@@ -1,3 +1,3 @@
 NAME=git
-VERSION=v1.2.0
+VERSION=v1.2.1
 DESCRIPTION="Git Service"
