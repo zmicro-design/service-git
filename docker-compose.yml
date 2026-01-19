@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   git:
-    image: whatwewant/gogs:${SERVICE_GIT_VERSION}
+    image: ${SERVICE_IMAGE_REGISTRY}/whatwewant/gogs:${SERVICE_GIT_VERSION}
     # ports:
     #   - 8080:3000
     #   - 10022:22
@@ -23,6 +23,12 @@ services:
       OAUTH2_SERVER_URL: ${SERVICE_GIT_OAUTH2_SERVER_URL}
       OAUTH2_CLIENT_ID: ${SERVICE_GIT_OAUTH2_CLIENT_ID}
       OAUTH2_CLIENT_SECRET: ${SERVICE_GIT_OAUTH2_CLIENT_SECRET}
+      # Database
+      DB_HSOT: ${SERVICE_GIT_DB_HOST}
+      DB_PORT: ${SERVICE_GIT_DB_PORT}
+      DB_USERNAME: ${SERVICE_GIT_DB_USERNAME}
+      DB_PASSWORD: ${SERVICE_GIT_DB_PASSWORD}
+      DB_NAME: ${SERVICE_GIT_DB_NAME}
     volumes:
       - ${SERVICE_DATA}:/data
 

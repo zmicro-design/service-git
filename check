@@ -7,6 +7,12 @@ check() {
   service::config SERVICE_GIT_ROOT_URL text
   service::config SERVICE_GIT_SECRET_KEY text "Input SERVICE_GIT_SECRET_KEY:" $(os::uuid)
 
+  service::config SERVICE_GIT_DB_HOST text
+  service::config SERVICE_GIT_DB_PORT text
+  service::config SERVICE_GIT_DB_USERNAME text
+  service::config SERVICE_GIT_DB_PASSWORD text
+  service::config SERVICE_GIT_DB_NAME text
+
   service::config SERVICE_GIT_MAIL_ENABLE yesno
   if [ "$SERVICE_GIT_MAIL_ENABLE" = "true" ]; then
     service::config SERVICE_GIT_MAIL_HOST text
