@@ -1,5 +1,6 @@
 services:
   git:
+    restart: always
     image: ${SERVICE_IMAGE_REGISTRY}/whatwewant/gogs:${SERVICE_GIT_VERSION}
     # ports:
     #   - 8080:3000
